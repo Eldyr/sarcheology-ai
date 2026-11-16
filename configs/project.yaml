@@ -1,0 +1,20 @@
+project:
+  name: SARchaeology AI
+  version: '1.0'
+  seed: 42
+hardware:
+  device: cuda
+  precision: bf16
+  gpu_vram_gb: 16
+data:
+  patch_size: 128
+  manual_labels: false
+models:
+  cae: {enabled: true, train: true, batch_size: 32}
+  sarmae: {enabled: true, pretrained: true, freeze_encoder: true, input_size: 224, batch_size: 4}
+  optical_mae: {enabled: true, train: true, input_size: 128, batch_size: 16, mask_ratio: 0.75}
+anomaly:
+  detectors: [knn, isolation_forest, reconstruction_error]
+fusion:
+  strategy: score_level
+  weights: {sar: 0.4, optical: 0.4, terrain: 0.2}
