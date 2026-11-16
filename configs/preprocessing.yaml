@@ -82,3 +82,14 @@ dem:
 
   output_directory: "data/processed/terrain"
   preview_directory: "outputs/visualizations/terrain"
+
+features:
+  output_directory: "data/processed/features"
+  output_nodata: -9999.0
+
+  sar:
+    min_valid_acquisitions: 3
+
+  optical:
+    min_valid_quarters: 2
+    min_scene_observations_per_quarter: 2
