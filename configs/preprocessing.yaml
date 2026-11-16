@@ -27,3 +27,37 @@ sar:
 
   output_directory: "data/processed/sar"
   preview_directory: "outputs/visualizations/sar"
+
+optical:
+  source: "sentinel-2-l2a"
+
+  bands:
+    - B02
+    - B03
+    - B04
+    - B08
+    - B11
+    - B12
+
+  quality_band: SCL
+
+  # SCL classes to exclude:
+  # 0  = No data
+  # 1  = Saturated / defective
+  # 2  = Topographic shadows
+  # 3  = Cloud shadows
+  # 7  = Unclassified
+  # 8  = Medium-probability clouds
+  # 9  = High-probability clouds
+  # 10 = Thin cirrus
+  # 11 = Snow / ice
+  invalid_scl_classes: [0, 1, 2, 3, 7, 8, 9, 10, 11]
+
+  cloud_buffer_pixels: 1
+  minimum_scene_valid_fraction: 0.15
+  minimum_composite_observations: 2
+
+  output_nodata: -9999.0
+
+  output_directory: "data/processed/optical"
+  preview_directory: "outputs/visualizations/optical"
