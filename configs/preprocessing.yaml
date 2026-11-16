@@ -115,3 +115,16 @@ alignment:
   # Fail rather than producing a dataset with
   # no pixels valid across all three modalities.
   require_joint_coverage: true
+
+patch_extraction:
+  year: 2024
+
+  # Outputs remain unassigned until Step 1.9.
+  output_directory: "data/patches/unassigned"
+
+  # Store the original modality inputs alongside
+  # the 19 engineered feature channels.
+  include_sar_time_series: true
+  include_optical_quarters: true
+
+  compression: "npz_compressed"
