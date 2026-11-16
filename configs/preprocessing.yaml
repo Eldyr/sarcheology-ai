@@ -61,3 +61,24 @@ optical:
 
   output_directory: "data/processed/optical"
   preview_directory: "outputs/visualizations/optical"
+
+dem:
+  source: "cop-dem-glo-30"
+  asset_key: "data"
+
+  # Perform calculations at approximately
+  # the native DEM spatial resolution.
+  processing_resolution_m: 30
+
+  # Extra terrain around the AOI prevents
+  # edge artifacts in slope and TPI calculations.
+  context_buffer_m: 900
+
+  smoothing_sigma_pixels: 1.0
+  tpi_sigma_pixels: 10.0
+
+  # Match Sentinel-1 / Sentinel-2 grid later.
+  output_nodata: -9999.0
+
+  output_directory: "data/processed/terrain"
+  preview_directory: "outputs/visualizations/terrain"
