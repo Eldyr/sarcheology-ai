@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "buto_demo",
+        "name": "Buto Egypt Study Area"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [30.68, 31.14],
+            [30.82, 31.14],
+            [30.82, 31.26],
+            [30.68, 31.26],
+            [30.68, 31.14]
+          ]
+        ]
+      }
+    }
+  ]
+}
