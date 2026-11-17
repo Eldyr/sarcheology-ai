@@ -1,0 +1,30 @@
+dataset:
+  dataset_id: "buto_demo_2024"
+
+  manifest_directory: "data/metadata/manifests/splits"
+  patch_directory: "data/patches/unassigned"
+
+  # Minimum valid VV/VH coverage for an individual
+  # SAR acquisition inside a geographic patch.
+  min_valid_fraction: 0.85
+
+  # Maximum number of decompressed SAR time series
+  # held in memory by each Dataset instance.
+  cache_size: 2
+
+dataloader:
+  batch_size: 16
+
+  # Begin with zero workers for easier debugging
+  # and reliable Windows execution.
+  num_workers: 0
+
+  pin_memory: true
+  persistent_workers: false
+
+  shuffle_train: true
+  drop_last_train: false
+
+training:
+  seed: 42
+  device: "cuda"
