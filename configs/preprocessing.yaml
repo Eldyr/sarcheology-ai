@@ -128,3 +128,23 @@ patch_extraction:
   include_optical_quarters: true
 
   compression: "npz_compressed"
+
+spatial_split:
+  year: 2024
+
+  # Divide the study area from west to east.
+  # "y" would divide it from south to north.
+  axis: "x"
+
+  train_fraction: 0.65
+  val_fraction: 0.20
+  test_fraction: 0.15
+
+  # Minimum distance between geographic
+  # footprints belonging to different splits.
+  gap_m: 640
+
+  # Never split a five-patch preview dataset.
+  require_complete_dataset: true
+
+  output_directory: "data/metadata/manifests/splits"

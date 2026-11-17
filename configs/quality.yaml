@@ -1,0 +1,19 @@
+quality:
+  # A split must contain enough patches
+  # to support at least a basic experiment.
+  minimum_split_patches:
+    train: 30
+    val: 10
+    test: 10
+
+  minimum_joint_valid_fraction: 0.85
+  minimum_separation_m: 640
+
+  # Warnings do not automatically fail QA.
+  warn_below_validation_patches: 30
+  warn_excluded_fraction_above: 0.25
+
+  require_complete_patch_dataset: true
+
+  output_directory: "outputs/quality"
+  data_card_path: "docs/data_card.md"

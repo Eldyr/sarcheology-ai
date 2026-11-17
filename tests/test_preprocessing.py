@@ -1,24 +1,63 @@
-"""Placeholder module for SARchaeology AI v1.0."""
+
+from pathlib import Path
+
+import yaml
 
 
-alignment:
-  year: 2024
+ROOT = Path(__file__).resolve().parents[1]
 
-  reference:
-    # Read CRS and resolution from configs/data.yaml.
-    source: "study_area"
 
-  output_directory: "data/processed/aligned"
-  output_nodata: -9999.0
+def test_preprocessing_configuration():
+    config_path = ROOT / "configs" / "preprocessing.yaml"
 
-  quality:
-    min_sar_acquisitions: 3
-    min_optical_quarters: 2
+    assert config_path.exists()
 
-  resampling:
-    continuous_features: "bilinear"
-    masks_and_counts: "nearest"
+    with config_path.open("r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
 
-  # Fail rather than producing a dataset with
-  # no pixels valid across all three modalities.
-  require_joint_coverage: true
+    required_sections = [
+        "sar",
+        "optical",
+        "dem",
+        "features",
+        "alignment",
+        "patch_extraction",
+        "spatial_split",
+    ]
+
+    for section in required_sections:
+        assert section in config, (
+            f"Missing configuration section: {section}"
+        )
+
+
+def test_alignment_configuration():
+    config_path = ROOT / "configs" / "preprocessing.yaml"
+
+    with config_path.open("r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+
+    alignment = config["alignment"]
+
+    assert alignment["year"] == 2024
+    assert alignment["output_nodata"] == -9999.0
+    assert alignment["require_joint_coverage"] is True
+
+
+def test_spatial_split_configuration():
+    config_path = ROOT / "configs" / "preprocessing.yaml"
+
+    with config_path.open("r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+
+    split = config["spatial_split"]
+
+    total = (
+        split["train_fraction"]
+        + split["val_fraction"]
+        + split["test_fraction"]
+    )
+
+    assert abs(total - 1.0) < 1e-8
+    assert split["gap_m"] >= 0
+    assert split["axis"] in ("x", "y")
