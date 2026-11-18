@@ -28,3 +28,22 @@ dataloader:
 training:
   seed: 42
   device: "cuda"
+
+normalization:
+  method: "robust_iqr"
+  output_path: "outputs/statistics/sar_normalization.json"
+
+  # Deterministic sampling from valid pixels
+  # of each eligible training observation.
+  pixels_per_acquisition: 128
+  seed: 42
+
+  # Same threshold as the SAR Dataset.
+  min_valid_fraction: 0.85
+
+  # Avoid division by near-zero scale.
+  min_scale: 0.01
+
+  # Standardized outlier clipping.
+  clip_min: -5.0
+  clip_max: 5.0
