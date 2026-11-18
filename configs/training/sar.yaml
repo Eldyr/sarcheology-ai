@@ -60,3 +60,12 @@ normalization:
   # Standardized outlier clipping.
   clip_min: -5.0
   clip_max: 5.0
+
+model:
+  architecture: "sar_cae"
+  in_channels: 2
+  base_channels: 32
+  latent_channels: 128
+  embedding_dim: 128
+  group_norm_groups: 8
+  input_size: 128
