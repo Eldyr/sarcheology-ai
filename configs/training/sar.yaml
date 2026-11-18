@@ -69,3 +69,9 @@ model:
   embedding_dim: 128
   group_norm_groups: 8
   input_size: 128
+
+loss:
+  type: "huber"
+  huber_delta: 1.0
+  reduction: "mean"
+  channel_weights: [1.0, 1.0]
