@@ -426,9 +426,12 @@ def train_model(
         )
 
         # Epoch-level learning-rate scheduling.
-        scheduler.step()
+        # Record the learning rate used during this epoch.
+        lr = optimizer.param_groups[0]["lr"]
 
-        lr = scheduler.get_last_lr()[0]
+        # Prepare the learning rate for the next epoch.
+        scheduler.step()
+        
         val_loss = float(
             val_metrics["loss"]
         )

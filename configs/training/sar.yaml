@@ -25,7 +25,6 @@ dataloader:
   shuffle_train: true
   drop_last_train: false
 
-
 training:
   seed: 42
   device: "cuda"
@@ -40,13 +39,6 @@ training:
   scheduler: "cosine"
   min_learning_rate: 0.000001
   log_every_batches: 50
-
-experiment:
-  project: "sarchaeology_ai"
-  model_name: "sar_cae"
-  output_directory: "outputs/experiments/sar"
-  checkpoint_directory: "checkpoints/sar"
-
 
 experiment:
   project: "sarchaeology_ai"
