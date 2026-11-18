@@ -28,6 +28,19 @@ dataloader:
 training:
   seed: 42
   device: "cuda"
+  epochs: 50
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  gradient_clip_norm: 1.0
+  mixed_precision: true
+  amp_dtype: "float16"
+  deterministic: true
+
+experiment:
+  project: "sarchaeology_ai"
+  model_name: "sar_cae"
+  output_directory: "outputs/experiments/sar"
+  checkpoint_directory: "checkpoints/sar"
 
 normalization:
   method: "robust_iqr"
