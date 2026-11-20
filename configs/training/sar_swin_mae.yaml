@@ -1,0 +1,43 @@
+experiment:
+  project: sarchaeology_ai
+  model_name: sar_swin_mae
+  source_run_id: sar_cae_20261118T192046Z_2dbe6bd2
+  output_directory: outputs/experiments/sar/sar_swin_mae
+  checkpoint_directory: checkpoints/sar/sar_swin_mae
+
+model:
+  architecture: sar_swin_mae
+  input_size: 128
+  in_channels: 2
+  mask_ratio: 0.40
+  mask_block_size: 16
+  pretrained: false
+
+training:
+  seed: 42
+  device: cuda
+  epochs: 50
+  batch_size: 16
+  num_workers: 2
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 2
+  learning_rate: 0.0001
+  min_learning_rate: 0.000001
+  weight_decay: 0.05
+  gradient_clip_norm: 1.0
+  mixed_precision: true
+  amp_dtype: float16
+  deterministic: false
+  log_every_batches: 50
+
+loss:
+  type: huber
+  huber_delta: 1.0
+  masked_region_weight: 1.0
+  visible_region_weight: 0.0
+
+evaluation:
+  deterministic_masks: true
+  mask_seed: 2026
+  checkpoint_metric: val_masked_huber
