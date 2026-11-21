@@ -38,6 +38,7 @@ def create_sar_dataloaders(
     project_root,
     config,
     include_test=False,
+    normalizer=None,  # NEW
 ):
     """
     Construct SAR Dataset and DataLoader objects.
@@ -64,6 +65,7 @@ def create_sar_dataloaders(
             cache_size=dataset_config[
                 "cache_size"
             ],
+            normalizer=normalizer,  # NEW
         )
 
     train_dataset = make_dataset("train")

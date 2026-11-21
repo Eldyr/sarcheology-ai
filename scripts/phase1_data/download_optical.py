@@ -48,12 +48,25 @@ def load_aoi(filename):
     )
 
 
-def load_items():
-    """Load STAC scene metadata from Step 1.2."""
-    path = (
-        ROOT
-        / "data/metadata/manifests/optical_scenes.parquet"
-    )
+
+def load_items(manifest_filename=None):
+    """Load STAC metadata from a chosen manifest."""
+
+    if manifest_filename is None:
+        path = (
+            ROOT
+            / "data/metadata/manifests"
+            / "optical_scenes.parquet"
+        )
+    else:
+        path = Path(manifest_filename)
+        if not path.is_absolute():
+            path = ROOT / path
+
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Optical manifest not found: {path}"
+        )
 
     manifest = pd.read_parquet(path)
     items = []
@@ -76,6 +89,7 @@ def load_items():
         items,
         key=lambda item: item.datetime,
     )
+
 
 
 def quarter_name(item):
@@ -106,6 +120,13 @@ def main():
         action="store_true",
     )
 
+    parser.add_argument(
+    "--manifest",
+    type=str,
+    default=None,
+    help="Optional Sentinel-2 STAC manifest path",
+    )
+
     args = parser.parse_args()
 
     data_cfg = load_yaml("configs/data.yaml")
@@ -130,7 +151,7 @@ def main():
     print("Target grid:", grid.width, grid.height)
     print("Target CRS:", grid.crs)
 
-    items = load_items()
+    items = load_items(args.manifest)
 
     if args.month:
         items = [
@@ -324,10 +345,25 @@ def main():
     for quarter, paths in sorted(
         quarter_paths.items()
     ):
+        median_output = composite_dir / f"{quarter}_median.tif"
+        count_output = composite_dir / f"{quarter}_valid_count.tif"
+
+        # Never silently replace an incomplete composite pair.
+        if median_output.exists() != count_output.exists():
+            raise RuntimeError(
+                f"{quarter}: incomplete existing composite pair. "
+                "Inspect the files before rebuilding."
+            )
+
+        # Preserve existing composites unless explicitly requested.
+        if median_output.exists() and not args.overwrite:
+            print(f"{quarter}: existing composite preserved")
+            continue
+
         if len(paths) < min_obs:
             print(
                 f"{quarter}: composite deferred "
-                f"({len(paths)} scene)"
+                f"({len(paths)} scenes; minimum {min_obs})"
             )
             continue
 
@@ -336,24 +372,17 @@ def main():
             f"from {len(paths)} scenes"
         )
 
-        median_path, count_path = (
-            make_quarterly_composite(
-                paths,
-                composite_dir,
-                quarter,
-                minimum_observations=min_obs,
-                nodata=optical_cfg["output_nodata"],
-            )
+        median_path, count_path = make_quarterly_composite(
+            paths,
+            composite_dir,
+            quarter,
+            minimum_observations=min_obs,
+            nodata=optical_cfg["output_nodata"],
         )
 
-        preview_path = (
-            preview_dir / f"{quarter}_median.png"
-        )
-
-        save_rgb_preview(
-            median_path,
-            preview_path,
-        )
+        preview_path = preview_dir / f"{quarter}_median.png"
+        if not preview_path.exists() or args.overwrite:
+            save_rgb_preview(median_path, preview_path)
 
         print("Composite:", median_path)
         print("Observation count:", count_path)

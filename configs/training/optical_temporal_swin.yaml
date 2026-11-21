@@ -1,0 +1,40 @@
+experiment:
+  output_dir: outputs/training/optical_temporal_swin
+  checkpoint_dir: checkpoints/optical_temporal_swin
+  pretrained_checkpoint: checkpoints/optical_swin_mim/optical_swin_mim_m75_20261121T193226Z_5fedf041/best.pt
+  statistics_path: outputs/statistics/optical_buto_multiyear_v1.json
+data:
+  years: [2022, 2023, 2024, 2025]
+  batch_size: 16
+  num_workers: 2
+  pin_memory: true
+  min_valid_fraction: 0.5
+  min_source_observations: 1
+  same_quarter_probability: 0.75
+model:
+  image_size: 128
+  patch_size: 8
+  in_channels: 6
+  mask_ratio: 0.75
+  embed_dim: 96
+  depths: [2, 2, 6, 2]
+  heads: [3, 6, 12, 24]
+  window_size: 8
+  decoder_dim: 128
+  projection_dim: 256
+  projector_hidden_dim: 512
+training:
+  seed: 42
+  epochs: 40
+  patience: 10
+  precision: bf16
+  backbone_learning_rate: 1.0e-5
+  projector_learning_rate: 1.0e-4
+  weight_decay: 0.05
+  gradient_clip_norm: 1.0
+  huber_delta: 1.0
+loss:
+  reconstruction_weight: 1.0
+  invariance_weight: 1.0
+  variance_weight: 0.1
+  covariance_weight: 0.01

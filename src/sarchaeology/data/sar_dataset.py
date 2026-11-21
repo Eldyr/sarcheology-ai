@@ -25,12 +25,13 @@ class SARDataset(Dataset):
     """
 
     def __init__(
-        self,
-        project_root,
-        dataset_id="buto_demo_2024",
-        split="train",
-        min_valid_fraction=0.85,
-        cache_size=2,
+    self,
+    project_root,
+    dataset_id="buto_demo_2024",
+    split="train",
+    min_valid_fraction=0.85,
+    cache_size=2,
+    normalizer=None,
     ):
         self.root = Path(project_root).resolve()
         self.dataset_id = dataset_id
@@ -39,6 +40,7 @@ class SARDataset(Dataset):
             min_valid_fraction
         )
         self.cache_size = int(cache_size)
+        self.normalizer = normalizer
 
         if split not in ("train", "val", "test"):
             raise ValueError(
@@ -325,6 +327,9 @@ class SARDataset(Dataset):
         acquisition = self.acquisitions[
             acquisition_index
         ]
+
+        if self.normalizer is not None:
+            image = self.normalizer(image, mask)
 
         return {
             "image": image,

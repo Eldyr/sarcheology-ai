@@ -1,0 +1,36 @@
+experiment:
+  name: optical_vit_tiny_mae
+  dataset_id: buto_demo_2024
+  output_dir: outputs/experiments/optical_mae
+  checkpoint_dir: checkpoints/optical_mae
+
+data:
+  statistics_path: outputs/statistics/optical_buto_demo_2024.json
+  min_valid_fraction: 0.50
+  batch_size: 16
+  num_workers: 2
+  pin_memory: true
+  prefetch_factor: 2
+
+model:
+  image_size: 128
+  patch_size: 8
+  in_channels: 6
+  mask_ratio: 0.75
+  encoder_dim: 192
+  encoder_depth: 8
+  encoder_heads: 3
+  decoder_dim: 128
+  decoder_depth: 4
+  decoder_heads: 4
+
+training:
+  seed: 42
+  epochs: 100
+  learning_rate: 0.0001
+  min_learning_rate: 0.000001
+  weight_decay: 0.05
+  gradient_clip_norm: 1.0
+  precision: bf16
+  huber_delta: 1.0
+  log_every_batches: 50
