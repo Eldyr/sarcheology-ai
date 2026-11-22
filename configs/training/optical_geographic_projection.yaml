@@ -1,0 +1,40 @@
+experiment:
+  name: optical_geographic_projection_v1
+  pretrained_checkpoint: checkpoints/optical_swin_mim/optical_swin_mim_m75_20261121T193226Z_5fedf041/best.pt
+  pretrained_config: outputs/training/optical_swin_mim/optical_swin_mim_m75_20261121T193226Z_5fedf041/config.yaml
+  statistics_path: outputs/statistics/optical_buto_multiyear_v1.json
+  checkpoint_dir: checkpoints/optical_geographic_projection
+  output_dir: outputs/training/optical_geographic_projection
+  cache_dir: outputs/cache/optical_geographic_projection
+
+data:
+  years: [2022, 2023, 2024, 2025]
+  min_valid_fraction: 0.5
+  min_source_observations: 1
+  feature_batch_size: 32
+  num_workers: 2
+  train_masks: 2
+  validation_masks: 3
+  same_quarter_probability: 0.75
+  min_negative_distance_pixels: 128
+
+model:
+  input_dim: 768
+  hidden_dim: 512
+  output_dim: 256
+
+training:
+  seed: 42
+  epochs: 100
+  patience: 15
+  locations_per_batch: 48
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  grad_clip_norm: 1.0
+  temperature: 0.12
+  teacher_temperature: 0.2
+  contrastive_weight: 1.0
+  relational_weight: 0.15
+  variance_weight: 0.5
+  covariance_weight: 0.05
+  target_std: 0.05
