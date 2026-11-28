@@ -1,0 +1,36 @@
+experiment:
+  spectral_checkpoint: checkpoints/optical_spectral_mae/spectral_mae_20261122T125708Z/best.pt
+  geographic_checkpoint: checkpoints/optical_geographic_projection/geo_projection_20261122T121336Z_a3fd36a6/best.pt
+  output_dir: outputs/training/optical_hybrid
+  checkpoint_dir: checkpoints/optical_hybrid
+  cache_dir: outputs/cache/optical_hybrid
+model:
+  swin_channels: 384
+  spectral_channels: 96
+  hidden_dim: 128
+  embedding_dim: 256
+  residual_scale: 0.05
+features:
+  spectral_mask_pairs:
+    - [B11, B12]
+    - [B04, B08]
+    - [B02, B03]
+  feature_batch_size: 16
+  num_workers: 2
+  train_swin_masks: 1
+  val_swin_masks: 3
+training:
+  seed: 42
+  epochs: 80
+  patience: 15
+  locations_per_batch: 48
+  min_negative_distance_pixels: 128
+  same_quarter_probability: 0.75
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  temperature: 0.12
+  contrastive_weight: 1.0
+  preservation_weight: 0.20
+  teacher_similarity_weight: 0.10
+  gate_weight: 0.01
+  grad_clip: 1.0

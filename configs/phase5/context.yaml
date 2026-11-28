@@ -1,0 +1,19 @@
+# No reference or expert labels belong in this register.
+vectors:
+  - path: configs/phase5/bouto_context.geojson
+    kind: known_settlement
+    source: https://topostext.org/place/312307UBou
+    attribution: ToposText, J. Brady Kiesling
+    permission: Linked open data with attribution (https://topostext.org/TT-downloads)
+    epoch: ancient
+    uncertainty_m: null
+rasters: []
+documents:
+  - title: Buto in the Tabula Peutingeriana
+    kind: historical_map
+    source: https://www1.ku.de/ggf/ag/tabula_peutingeriana/trefferanzeige_en.php?id=2792
+    use: Gazetteer cross-reference for the settlement. The itinerary has no local metric transform.
+  - title: A new look at the Butic Canal, Egypt
+    kind: palaeowaterway
+    source: https://doi.org/10.5194/egqsj-70-29-2021
+    use: Schiestl (2021) describes uncertain western alignments. No local centreline used for distance.

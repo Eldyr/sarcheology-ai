@@ -1,0 +1,16 @@
+maps: outputs/phase4/buto_maps
+prepared: outputs/phase4/buto_2024
+spectral: outputs/phase5_inputs/spectral/val_2024
+composites: data/processed/optical/composites
+context: configs/phase5/context.yaml
+landscape: buto
+edge_guard_m: 40
+group_gap_m: 20
+minimum_area_m2: 1600
+background_m: 120
+priority_weights:
+  magnitude: 0.35
+  persistence: 0.25
+  diversity: 0.20
+  morphology: 0.10
+  acquisition_stability: 0.10

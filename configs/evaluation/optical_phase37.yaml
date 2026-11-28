@@ -1,0 +1,14 @@
+# Edit checkpoint run IDs if your run directories differ. Do not tune on test.
+checkpoints:
+  geographic: checkpoints/optical_geographic_projection/geo_projection_20261122T121336Z_a3fd36a6/best.pt
+  spectral: checkpoints/optical_spectral_mae/spectral_mae_20261122T125708Z/best.pt
+  hybrid: checkpoints/optical_hybrid/hybrid_optical_20261122T151336Z_afb2902a/best.pt
+  swin_only_adapter: checkpoints/optical_hybrid/hybrid_optical_20261122T151408Z_6fe6b42a/best.pt
+protocol:
+  masked_views: 3
+  spectral_pairs:
+    - [B11, B12]
+    - [B04, B08]
+    - [B02, B03]
+output:
+  report_path: outputs/evaluation/optical_phase37/heldout_test_once.json

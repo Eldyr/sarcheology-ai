@@ -81,9 +81,9 @@ class MultiYearOpticalDataset(Dataset):
         self.statistics = statistics
         self.clip = float(clip)
 
-        if split not in ("train", "val"):
+        if split not in ("train", "val", "test"):
             raise ValueError(
-                "Split must be 'train' or 'val'"
+                "Split must be 'train', 'val', or 'test'"
             )
 
         if not self.years:
@@ -178,8 +178,8 @@ class MultiYearOpticalDataset(Dataset):
                     "contain six spectral bands"
                 )
 
-        # Preserve the original 2024 validation benchmark.
-        if split == "val":
+        # Preserve the 2024 validation and independent test protocols.
+        if split in ("val", "test"):
             selected_years = (2024,)
         else:
             selected_years = self.years
@@ -210,10 +210,9 @@ class MultiYearOpticalDataset(Dataset):
                     )
 
                 if not median_exists:
-                    if split == "val":
+                    if split in ("val", "test"):
                         raise FileNotFoundError(
-                            f"Missing validation quarter: "
-                            f"{label}"
+                            f"Missing {split} quarter: {label}"
                         )
 
                     print(

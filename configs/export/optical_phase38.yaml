@@ -1,0 +1,12 @@
+# Phase 3.8 production-neutral patch-local geospatial feature export
+checkpoints:
+  geographic: checkpoints/optical_geographic_projection/geo_projection_20261122T121336Z_a3fd36a6/best.pt
+  spectral: checkpoints/optical_spectral_mae/spectral_mae_20261122T125708Z/best.pt
+export:
+  # Export one named split at a time. The original geographical IDs never change.
+  split: test
+  year: 2024
+  manifest_dir: data/metadata/manifests/splits/buto_demo_2024
+  output_dir: outputs/exports/optical_phase38
+  masked_views: 3
+  min_valid_cell_fraction: 0.5

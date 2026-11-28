@@ -1,4 +1,4 @@
 """Starter Streamlit entrypoint."""
 import streamlit as st
 st.title("SARchaeology AI")
-st.info("Project scaffold: data pipelines and models are not implemented yet.")
+st.page_link("pages/candidate_review.py",label="Open the archaeological candidate review")
